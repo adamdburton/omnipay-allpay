@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Server: Apache
+Date: Sun, 11 May 2014 21:17:31 GMT
+Content-Type: text/html; charset=utf-8
+Status: 200 OK
+
+{"version":"VER000000005","charSet":"UTF-8","transType":"INQY","orderNum":"5d286616bb71b","transID":"5eShkHH4BI6asZUa","merID":"800039257322058","acqID":"99020344","paymentSchema":"UP","RespCode":"00","RespMsg":"success","transTime":"20190712115102","GWTime":"20190712194845","signType":"MD5","signature":"4db30e34355d4ef4bdb6331d704a40c6"}
