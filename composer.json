@@ -1,11 +1,11 @@
 {
-  "name": "mobiusmedia/omnipay-allpay",
+  "name": "mobiusmediauk/omnipay-allpay",
   "description": "AllPay (allpayx.com) driver for Omnipay.",
   "keywords": [
     "omnipay",
     "allpay"
   ],
-  "homepage": "https://github.com/mobiusmedia/omnipay-allpay",
+  "homepage": "https://github.com/mobiusmediauk/omnipay-allpay",
   "license": "MIT",
   "authors": [
     {
