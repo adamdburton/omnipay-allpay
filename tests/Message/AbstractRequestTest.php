@@ -1,33 +1,37 @@
 <?php
 
-namespace Omnipay\Skeleton\Message;
+namespace Omnipay\AllPay\Test\Message;
 
 use Omnipay\AllPay\Message\PurchaseRequest;
 use Omnipay\Tests\TestCase;
 
+/**
+ * Class AuthorizeRequestTest
+ * @package Omnipay\Skeleton\Message
+ */
 class AuthorizeRequestTest extends TestCase
 {
     /** @var PurchaseRequest */
     private $request;
+
+    private $options;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-    }
 
-    public function testSigning()
-    {
-        $options = [
+        $this->options = [
             'merchantId' => '000000000000015',
+            'transTime' => '20190710222437',
             'transactionReference' => 'abc123',
             'amount' => '10.00',
             'paymentMethod' => 'WX',
             'returnUrl' => 'https://localhost/return',
             'notifyUrl' => 'https://localhost/notify',
             'currency' => 'CNY',
-            'description' => 'Test purchase',
+            'description' => 'Test purchase 1',
             'items' => [
                 [
                     'goods_name' => 'test item 1',
@@ -39,13 +43,17 @@ class AuthorizeRequestTest extends TestCase
                 ]
             ]
         ];
+    }
 
-        $this->request->initialize($options);
-        $this->request->setTransTime('20190710222437');
+    public function testSigning()
+    {
+        $this->request->initialize($this->options);
         $this->request->setSignature('2f2c77e3718c47cfb47a89a6fbc9d361');
 
         $data = $this->request->getData();
 
-        $this->assertEquals(strtolower('88d2fbc9291ff38d711016172ef28981'), $this->request->sign($data));
+        $signature = $this->request->sign($data);
+
+        $this->assertEquals('8dc9cfd6079beb3978b3f7daeddd0925', $signature);
     }
 }

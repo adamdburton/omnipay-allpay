@@ -5,6 +5,10 @@ namespace Omnipay\AllPay\Test;
 use Omnipay\AllPay\Gateway;
 use Omnipay\Tests\GatewayTestCase;
 
+/**
+ * Class GatewayTest
+ * @package Omnipay\AllPay\Test
+ */
 class GatewayTest extends GatewayTestCase
 {
     /** @var Gateway */
@@ -29,7 +33,7 @@ class GatewayTest extends GatewayTestCase
             'notifyUrl' => 'https://localhost/notify',
             'currency' => 'CNY',
             'paymentMethod' => 'WX',
-            'description' => 'Test purchase',
+            'description' => 'Test purchase 2',
             'items' => [
                 [
                     'goods_name' => 'test item 1',
@@ -62,10 +66,11 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('PurchaseSuccess.txt');
         $response = $this->gateway->purchase($this->purchaseOptions)->send();
-
+//var_dump($response->getData());die();
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://101.231.204.80:5000/gateway/api/frontTransReq.do', $response->getRedirectUrl());
+        $this->assertEquals('01', $response->getCode());
     }
 
     public function testPurchaseFailure()
@@ -84,6 +89,7 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->refund($this->refundOptions)->send();
 
         $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('Refunded', $response->getMessage());
         $this->assertEquals('f332f23f23f23f', $response->getTransactionReference());
     }
 
@@ -104,6 +110,8 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('5eShkHH4BI6asZUa', $response->getTransactionReference());
+        $this->assertEquals('00', $response->getCode());
+        $this->assertEquals('success', $response->getMessage());
     }
 
     public function testCompletePurchaseFailure()
@@ -114,5 +122,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
+        $this->assertEquals('01', $response->getCode());
+        $this->assertEquals(null, $response->getMessage());
     }
 }

@@ -3,7 +3,6 @@
 namespace Omnipay\AllPay\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use GuzzleHttp\Psr7;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
@@ -45,11 +44,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function getEndpoint()
     {
         return ($this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint) . '/' . $this->apiEndpoint;
-    }
-
-    protected function createResponse($data)
-    {
-        return $this->response = new Response($this, $data);
     }
 
     public function setMerchantId($value)

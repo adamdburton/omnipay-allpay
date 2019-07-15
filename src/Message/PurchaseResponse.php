@@ -3,9 +3,16 @@
 namespace Omnipay\AllPay\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 class PurchaseResponse extends Response implements RedirectResponseInterface
 {
+    public function __construct(RequestInterface $request, $data)
+    {
+        $this->request = $request;
+        $this->data = $data;
+    }
+
     public function isRedirect()
     {
         return !!$this->getFormAction();
@@ -33,16 +40,12 @@ class PurchaseResponse extends Response implements RedirectResponseInterface
 
     public function getCode()
     {
-        if (isset($this->data['RespCode'])) {
-            return $this->data['RespCode'];
-        }
+        return $this->isSuccessful() ? '00' : '01';
     }
 
     public function getMessage()
     {
-        if (isset($this->data['RespMsg'])) {
-            return $this->data['RespMsg'];
-        }
+        return $this->getData();
     }
 
     protected function getFormAction()
